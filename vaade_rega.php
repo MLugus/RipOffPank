@@ -33,11 +33,11 @@
     </nav>
 
     <div class="container">
-        <form class="form-signin">
-            <input type="hidden" name="action" value="login">
+        <form class="form-signin" action="<?= $_SERVER['PHP_SELF']; ?>">
+            <input type="hidden" name="action" value="register">
             <h2 class="form-signin-heading">Palun sisestage vajalikud andmed</h2>
-            <input type="text" class="form-control" placeholder="Kasutajanimi" autofocus required>
-            <input type="password" class="form-control" placeholder="Salasõna" required>
+            <input type="text" class="form-control" name="kasutajanimi" placeholder="Kasutajanimi" autofocus required>
+            <input type="password" class="form-control" name="parool" placeholder="Salasõna" required>
             <input type="password" class="form-control" placeholder="Kinnita salasõna" required>
             <label class="checkbox">
                 <input type="checkbox" value="terms">Nõustun tingimustega
