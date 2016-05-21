@@ -31,9 +31,12 @@
             </div>
         </div>
         <div class="nav navbar-nav navbar-right">
-            <a type="button" href="#" class="btn btn-primary btn-lg">
-                <span class="glyphicon glyphicon-log-out"></span> Logi välja
-            </a>
+            <form method="post"  action="<?= $_SERVER['PHP_SELF']; ?>">
+                <input type="hidden" name="action" value="logout">
+                <a type="button" href="#" class="btn btn-primary btn-lg">
+                    <span class="glyphicon glyphicon-log-out"></span> Logi välja
+                </a>
+            </form>
         </div>
     </nav>
         <div class="container">

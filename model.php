@@ -69,3 +69,36 @@ function model_user_add($kasutajanimi, $parool)
 
     return $id;
 }
+
+/**
+ * Tagastab kasutaja ID, kelle kasutajanimi ja parool klapivad sisendiga.
+ *
+ * @param string $kasutajanimi Otsitava kasutaja kasutajanimi
+ * @param string $parool       Otsitava kasutaja parool
+ *
+ * @return int Kasutaja ID
+ */
+function model_user_get($kasutajanimi, $parool)
+{
+    global $l;
+
+    $query = 'SELECT id, parool FROM mlugus__kasutajad WHERE kasutajanimi=? LIMIT 1';
+    $stmt = mysqli_prepare($l, $query);
+    if (mysqli_error($l)) {
+        echo mysqli_error($l);
+        exit;
+    }
+
+    mysqli_stmt_bind_param($stmt, 's', $kasutajanimi);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_bind_result($stmt, $id, $hash);
+    mysqli_stmt_fetch($stmt);
+    mysqli_stmt_close($stmt);
+
+    // kontrollime, kas vabateksti $parool klapib baasis olnud räsiga $hash
+    if (password_verify($parool, $hash)) {
+        return $id;
+    }
+
+    return false;
+}
