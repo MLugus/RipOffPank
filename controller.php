@@ -60,3 +60,13 @@ function controller_logout()
 
     return true;
 }
+
+// Kontrollib kas kasutaja on sisse logitud
+function controller_user()
+{
+    if (empty($_SESSION['login'])) {
+        return false;
+    }
+
+    return $_SESSION['login'];
+}

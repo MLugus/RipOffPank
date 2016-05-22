@@ -36,3 +36,30 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     // POST päringu puhul me sisu ei näita
     exit;
 }
+
+// Rakenduse "ruuter" GET päringu puhul
+if (!empty($_GET['view'])) {
+    switch ($_GET['view']) {
+        case 'login':
+            require 'vaade_login.php';
+            break;
+        case 'register':
+            require 'vaade_rega.php';
+            break;
+        default:
+            header('Content-type: text/plain; charset=utf-8');
+            echo 'Tundmatu valik!';
+            exit;
+    }
+} else {
+    if (!controller_user()) {
+        header('Location: '.$_SERVER['PHP_SELF'].'?view=login');
+        exit;
+    }
+
+    require 'vaade_pealeht.php';
+}
+
+mysqli_close($l);
+
+

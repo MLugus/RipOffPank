@@ -50,17 +50,17 @@ function model_load()
 function model_user_add($kasutajanimi, $parool)
 {
     global $l;
+    $kontoj = 2500.00;
 
     $hash = password_hash($parool, PASSWORD_DEFAULT);
-
-    $query = 'INSERT INTO mlugus__kasutajad (kasutajanimi, parool) VALUES (?, ?)';
+    $query = 'INSERT INTO mlugus__kasutajad (kasutajanimi, parool, kontoseis) VALUES (?, ?, ?,)';
     $stmt = mysqli_prepare($l, $query);
     if (mysqli_error($l)) {
         echo mysqli_error($l);
         exit;
     }
 
-    mysqli_stmt_bind_param($stmt, 'ss', $kasutajanimi, $hash);
+    mysqli_stmt_bind_param($stmt, 'ssd', $kasutajanimi, $hash, $kontoj);
     mysqli_stmt_execute($stmt);
 
     $id = mysqli_stmt_insert_id($stmt);
