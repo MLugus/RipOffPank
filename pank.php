@@ -2,34 +2,43 @@
 
 session_start();
 
+// genereerime sessiooni jaoks unikaalse CSRF tokeni
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(openssl_random_pseudo_bytes(20));
+}
+
 // laeme andmete haldamise meetodid
 require 'model.php';
 
 // laeme andmete modifitseerimise meetodid
 require 'controller.php';
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+// rakenduse "ruuter" POST päringu puhul
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
     // $result muutuja indikeerib kas toimus mõni õnnestunud tegevus või mitte
     $result = false;
 
-    switch($_SERVER['action']){
+    // Lubame postitustegevused ainult juhul kui päringuga tuleb kaasa korrektne CSRF token.
+    // Eeelab, et paneksime kõikidesse lehe vormidesse selle tokeni peidetud väljana sisse
+    if (!empty($_POST['csrf_token']) && $_POST['csrf_token'] == $_SESSION['csrf_token']) {
+        switch ($_POST['action']) {
 
-        case 'register':
-            $kasutajanimi = $_POST['kasutajanimi'];
-            $parool = $_POST['parool'];
-            $result = controller_register($kasutajanimi, $parool);
-            break;
+            case 'register':
+                $kasutajanimi = $_POST['kasutajanimi'];
+                $parool = $_POST['parool'];
+                $result = controller_register($kasutajanimi, $parool);
+                break;
 
-        case 'login':
-            $kasutajanimi = $_POST['kasutajanimi'];
-            $parool = $_POST['parool'];
-            $result = controller_login($kasutajanimi, $parool);
-            break;
+            case 'login':
+                $kasutajanimi = $_POST['kasutajanimi'];
+                $parool = $_POST['parool'];
+                $result = controller_login($kasutajanimi, $parool);
+                break;
 
-        case 'logout':
-            $result = controller_logout();
-            break;
-
+        }
+    } else {
+        //message_add('Vigane päring, CSRF token ei vasta oodatule');
     }
 
     header('Location: '.$_SERVER['PHP_SELF']);

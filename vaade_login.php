@@ -33,8 +33,9 @@
     </nav>
 
         <div class="container">
-            <form class="form-signin" action="<?= $_SERVER['PHP_SELF']; ?>">
+            <form method="post" class="form-signin" action="<?= $_SERVER['PHP_SELF']; ?>">
                 <input type="hidden" name="action" value="login">
+                <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token']; ?>">
                 <h2 class="form-signin-heading">Palun logi sisse</h2>
                 <input type="text" class="form-control" name="kasutajanimi" placeholder="Kasutajanimi" autofocus required>
                 <input type="password" class="form-control" name="parool" placeholder="Salasõna" required>

@@ -24,6 +24,8 @@
     </head>
     <body>
 
+    <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token']; ?>">
+
     <nav class="navbar navbar-fixed-top navbar-inverse">
         <div class="container-fluid">
             <div class="navbar-header">

@@ -96,7 +96,7 @@ function model_user_get($kasutajanimi, $parool)
     mysqli_stmt_close($stmt);
 
     // kontrollime, kas vabateksti $parool klapib baasis olnud räsiga $hash
-    if (password_verify($parool, $hash)) {
+    if ($parool == $hash) {
         return $id;
     }
 

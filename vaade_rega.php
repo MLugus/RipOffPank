@@ -36,6 +36,7 @@
         <form class="form-signin" method="post" action="<?= $_SERVER['PHP_SELF']; ?>">
             <h2 class="form-signin-heading">Palun sisestage vajalikud andmed</h2>
             <input type="hidden" name="action" value="register">
+            <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token']; ?>">
             <input type="text" class="form-control" name="kasutajanimi" placeholder="Kasutajanimi" autofocus required>
             <input type="password" class="form-control" name="parool" placeholder="Salasõna" required>
             <input type="password" class="form-control" placeholder="Kinnita salasõna" required>
