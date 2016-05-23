@@ -53,7 +53,7 @@ function model_user_add($kasutajanimi, $parool)
     $kontoj = 2500.00;
 
     $hash = password_hash($parool, PASSWORD_DEFAULT);
-    $query = 'INSERT INTO mlugus__kasutajad (kasutajanimi, parool, kontoseis) VALUES (?, ?, ?,)';
+    $query = 'INSERT INTO mlugus__kasutajad (kasutajanimi, parool, kontoseis) VALUES (?, ?, ?)';
     $stmt = mysqli_prepare($l, $query);
     if (mysqli_error($l)) {
         echo mysqli_error($l);
@@ -96,7 +96,7 @@ function model_user_get($kasutajanimi, $parool)
     mysqli_stmt_close($stmt);
 
     // kontrollime, kas vabateksti $parool klapib baasis olnud räsiga $hash
-    if ($parool == $hash) {
+    if (password_verify($parool, $hash)) {
         return $id;
     }
 

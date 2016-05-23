@@ -43,7 +43,7 @@
                     <input type="checkbox" value="Maleta-mind">Mäleta mind
                 </label>
                 <button class="btn btn-lg btn-primary btn-block" type="submit">Logi sisse</button>
-                <a href="vaade_rega.php" class="btn btn-lg btn-primary btn-block" role="button">Registreeri</a>
+                <a href="<?= $_SERVER['PHP_SELF']; ?>?view=register" class="btn btn-lg btn-primary btn-block" role="button">Registreeri</a>
             </form>
         </div>
 
