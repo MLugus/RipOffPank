@@ -29,7 +29,7 @@
             <div class="navbar-header">
                 <a class="navbar-brand" href="#">RipOFF Pank</a>
             </div>
-        </div
+        </div>
         <div class="nav navbar-nav navbar-right">
             <form method="post"  action="<?= $_SERVER['PHP_SELF']; ?>">
                 <input type="hidden" name="action" value="logout">
@@ -41,11 +41,12 @@
     </nav>
 
     <div class="container">
-        <form class="form-signin">
-            <input type="hidden" name="action" value="submit">
+        <form method="post" class="form-signin" action="<?= $_SERVER['PHP_SELF']; ?>">
+            <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token']; ?>">
+            <input type="hidden" name="action" value="makse">
             <h2 class="form-signin-heading">Raha ülekanne</h2>
-            <input type="text" class="form-control" placeholder="Saaja konto" autofocus required>
-            <input type="number" class="form-control" placeholder="Saadetav summa" required>
+            <input type="text" class="form-control" placeholder="Saaja konto" name="saaja" autofocus required>
+            <input type="number" class="form-control" placeholder="Saadetav summa" name="summa" required>
             <label class="checkbox">
                 <input type="checkbox" value="terms">Nõustun tehingu tingimustega
             </label>

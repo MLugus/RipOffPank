@@ -102,3 +102,46 @@ function model_user_get($kasutajanimi, $parool)
 
     return false;
 }
+
+function model_user_id($kasutajanimi){
+    global $l;
+
+    $query = 'SELECT id FROM mlugus__kasutajad WHERE Kasutajanimi=? LIMIT 1';
+    $stmt = mysqli_prepare($l, $query);
+    if (mysqli_error($l)) {
+        echo mysqli_error($l);
+        exit;
+    }
+
+    mysqli_stmt_bind_param($stmt, 's', $kasutajanimi);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_bind_result($stmt, $id);
+    mysqli_stmt_fetch($stmt);
+    mysqli_stmt_close($stmt);
+
+    return $id;
+
+}
+
+function model_makse($saaja, $summa)
+{
+    global $l;
+    $maksja_id = $_SESSION['login'];
+    $saaja_id = model_user_id($saaja);
+
+    $query = 'INSERT INTO mlugus__tehingud (maksja_id, saaja_id, makse_summa) VALUES (?, ?, ?)';
+    $stmt = mysqli_prepare($l, $query);
+    if (mysqli_error($l)) {
+        echo mysqli_error($l);
+        exit;
+    }
+
+    mysqli_stmt_bind_param($stmt, 'iid', $maksja_id, $saaja_id, $summa);
+    mysqli_stmt_execute($stmt);
+
+    $id = mysqli_stmt_insert_id($stmt);
+
+    mysqli_stmt_close($stmt);
+
+    return $id;
+}

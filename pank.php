@@ -36,6 +36,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $result = controller_login($kasutajanimi, $parool);
                 break;
 
+            case 'makse':
+                $saaja = $_POST['saaja'];
+                $summa = intval($_POST['summa']);
+                $result = controller_makse($saaja, $summa);
+                break;
+
         }
     } else {
         //message_add('Vigane päring, CSRF token ei vasta oodatule');
@@ -46,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     exit;
 }
 
-// Rakenduse "ruuter" GET päringu puhul
+// Rakenduse "ruuter" GET päringu puhul, PEAKS RESTRICKTIMA JUURDEPÄÄSU TEISTELE FAILIDELE.php AGA EI RESTRICKTI
 if (!empty($_GET['view'])) {
     switch ($_GET['view']) {
         case 'login':
@@ -54,6 +60,9 @@ if (!empty($_GET['view'])) {
             break;
         case 'register':
             require 'vaade_rega.php';
+            break;
+        case 'makse':
+            require 'vaade_makse.php';
             break;
         default:
             header('Content-type: text/plain; charset=utf-8');

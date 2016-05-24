@@ -24,16 +24,15 @@
     </head>
     <body>
 
-    <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token']; ?>">
-
     <nav class="navbar navbar-fixed-top navbar-inverse">
         <div class="container-fluid">
             <div class="navbar-header">
-                    <a class="navbar-brand" href="#">RipOFF Pank</a>
+                <a class="navbar-brand" href="#">RipOFF Pank</a>
             </div>
         </div>
         <div class="nav navbar-nav navbar-right">
             <form method="post"  action="<?= $_SERVER['PHP_SELF']; ?>">
+                <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token']; ?>">
                 <input type="hidden" name="action" value="logout">
                 <a type="button" href="#" class="btn btn-primary btn-lg">
                     <span class="glyphicon glyphicon-log-out"></span> Logi välja
@@ -47,7 +46,7 @@
 
                 <h2 class="form-signin-heading text-center">Kontojääk:</h2>
                 <button class="btn btn-lg btn-primary btn-block" type="submit">Tehingud</button>
-                <button class="btn btn-lg btn-primary btn-block" type="submit">Uus makse</button>
+                <a href="<?= $_SERVER['PHP_SELF']; ?>?view=makse" class="btn btn-lg btn-primary btn-block" role="button">Uus makse</a>
 
             </form>
 

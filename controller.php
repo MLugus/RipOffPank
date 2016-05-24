@@ -70,3 +70,29 @@ function controller_user()
 
     return $_SESSION['login'];
 }
+
+// Lisab uue makse
+function controller_makse($saaja, $summa)
+{
+    if (!controller_user()) {
+       // message_add('Tegevus eeldab sisselogimist');
+
+        return false;
+    }
+
+    // kontrollime kas sisendväärtused on oodatud kujul või mitte
+    if ($saaja == '' || $summa <= 0) {
+       // message_add('Vigased sisendandmed');
+
+        return false;
+    }
+
+    if (model_makse($saaja, $summa)) {
+      //  message_add('Lisati uus rida');
+
+        return true;
+    }
+   // message_add('Andmete lisamine ebaõnnestus');
+
+    return false;
+}
