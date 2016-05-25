@@ -71,9 +71,16 @@ function controller_user()
     return $_SESSION['login'];
 }
 
-// Lisab uue makse
+
+/**
+ * Lisab uue makse, kontrollib sisendeid ja kontojääki ning kas ülekanne tehtav, selle summaga.
+ * @param $saaja
+ * @param $summa
+ * @return bool
+ */
 function controller_makse($saaja, $summa)
 {
+
     if (!controller_user()) {
        // message_add('Tegevus eeldab sisselogimist');
 
@@ -84,6 +91,9 @@ function controller_makse($saaja, $summa)
     if ($saaja == '' || $summa <= 0) {
        // message_add('Vigased sisendandmed');
 
+        return false;
+    }
+    if( (model_user_kontoseis($_SESSION['login'])-$summa) <= 0 ){
         return false;
     }
 
