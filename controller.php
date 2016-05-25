@@ -87,6 +87,10 @@ function controller_makse($saaja, $summa)
         return false;
     }
 
+    if(model_user_id($saaja) == 0){
+        return false;
+    }
+
     // kontrollime kas sisendväärtused on oodatud kujul või mitte
     if ($saaja == '' || $summa <= 0) {
        // message_add('Vigased sisendandmed');

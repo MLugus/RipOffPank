@@ -46,7 +46,7 @@
             <input type="hidden" name="action" value="makse">
             <h2 class="form-signin-heading">Raha ülekanne</h2>
             <input type="text" class="form-control" placeholder="Saaja konto" name="saaja" autofocus required>
-            <input type="number" class="form-control" placeholder="Saadetav summa" name="summa" required>
+            <input type="number" step="0.01" class="form-control" placeholder="Saadetav summa" name="summa" required>
             <label class="checkbox">
                 <input type="checkbox" value="terms">Nõustun tehingu tingimustega
             </label>
