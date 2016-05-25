@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             case 'makse':
                 $saaja = $_POST['saaja'];
-                $summa = intval($_POST['summa']);
+                $summa = $_POST['summa'];
                 $result = controller_makse($saaja, $summa);
                 break;
 

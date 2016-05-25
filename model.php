@@ -131,7 +131,7 @@ function model_user_id($kasutajanimi){
 /**
  * Funktsioon tagastab id'le vastava kontoseisu
  * @param $id
- * @return kontoseis, double
+ * @return double
  */
 function model_user_kontoseis($id){
     global $l;
