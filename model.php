@@ -13,7 +13,6 @@ function model_load()
 {
     global $l;
     $konto_id = $_SESSION['login'];
-    $maksja_konto = model_kasutajanimi_get($konto_id);
 
     $query = 'SELECT tehingu_id, maksja_id, saaja_id, makse_summa FROM mlugus__tehingud WHERE maksja_id=? OR saaja_id=?';
     $stmt = mysqli_prepare($l, $query);
@@ -38,8 +37,38 @@ function model_load()
 
     mysqli_stmt_close($stmt);
 
-    return $rows;
+    return model_re_table($rows);
 }
+
+function model_re_table($rows){
+
+    $konto_id = $_SESSION['login'];
+    $maksja_konto = model_kasutajanimi_get($konto_id);
+
+    $read = array();
+    foreach($rows as $row){
+        $summa = $row['summa'];
+        if($row['maksja'] == $konto_id){
+            $maksja = $maksja_konto;
+            $summa = ((-1) * $row['summa']);
+        }else{
+            $maksja = model_kasutajanimi_get($row['maksja']);
+        }
+        if($row['saaja'] == $konto_id){
+            $saaja = $maksja_konto;
+        }else{
+            $saaja = model_kasutajanimi_get($row['saaja']);
+        }
+        $read[] = array(
+            'id' => $row['id'],
+            'maksja' => $maksja,
+            'saaja' => $saaja,
+            'summa' => $summa,
+        );
+    }
+    return $read;
+    }
+
 
 function model_kasutajanimi_get($id){
     global $l;
