@@ -12,30 +12,53 @@ mysqli_query($l, 'SET CHARACTER SET UTF8');
 function model_load()
 {
     global $l;
+    $konto_id = $_SESSION['login'];
+    $maksja_konto = model_kasutajanimi_get($konto_id);
 
-
-    $query = 'SELECT Id, Nimetus, Kogus FROM mlugus__kasutajad ORDER BY Nimetus ';
+    $query = 'SELECT tehingu_id, maksja_id, saaja_id, makse_summa FROM mlugus__tehingud WHERE maksja_id=? OR saaja_id=?';
     $stmt = mysqli_prepare($l, $query);
     if (mysqli_error($l)) {
         echo mysqli_error($l);
         exit;
     }
-    mysqli_stmt_bind_param($stmt, 'ii');
+    mysqli_stmt_bind_param($stmt, 'ii', $konto_id, $konto_id);
     mysqli_stmt_execute($stmt);
-    mysqli_stmt_bind_result($stmt, $id, $nimetus, $kogus);
+    mysqli_stmt_bind_result($stmt, $id, $maksja, $saaja, $summa);
 
     $rows = array();
     while (mysqli_stmt_fetch($stmt)) {
+
         $rows[] = array(
             'id' => $id,
-            'nimetus' => $nimetus,
-            'kogus' => $kogus,
+            'maksja' => $maksja,
+            'saaja' => $saaja,
+            'summa' => $summa,
         );
     }
 
     mysqli_stmt_close($stmt);
 
     return $rows;
+}
+
+function model_kasutajanimi_get($id){
+    global $l;
+
+    $query = 'SELECT kasutajanimi FROM mlugus__kasutajad WHERE id=? LIMIT 1';
+    $stmt = mysqli_prepare($l, $query);
+    if (mysqli_error($l)) {
+        echo mysqli_error($l);
+        exit;
+    }
+
+    mysqli_stmt_bind_param($stmt, 'i', $id);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_bind_result($stmt, $kasutajanimi);
+    mysqli_stmt_fetch($stmt);
+    mysqli_stmt_close($stmt);
+
+    return $kasutajanimi;
+
 }
 
 /**

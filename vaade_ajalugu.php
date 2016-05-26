@@ -44,6 +44,7 @@
             <table class="form-signin table-condensed">
                 <thead>
                 <tr>
+                    <th>Tehingu Id</th>
                     <th>Maksja</th>
                     <th>Saaja</th>
                     <th>Summa</th>
@@ -55,6 +56,9 @@
                 // koolon tsükli lõpus tähendab, et tsükkel koosneb HTML osast
                 foreach (model_load() as $rida): ?>
                     <tr>
+                        <td>
+                            <?= $rida['id']; ?>
+                        </td>
                         <td>
                             <?= htmlspecialchars($rida['maksja']); ?>
                         </td>

@@ -64,6 +64,9 @@ if (!empty($_GET['view'])) {
         case 'makse':
             require 'vaade_makse.php';
             break;
+        case 'tehingud':
+            require 'vaade_ajalugu.php';
+            break;
         default:
             header('Content-type: text/plain; charset=utf-8');
             echo 'Tundmatu valik!';

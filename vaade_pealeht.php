@@ -45,7 +45,7 @@
             <form class="form-signin">
 
                 <h2 class="form-signin-heading text-center">Kontojääk: <?= model_user_kontoseis($_SESSION['login']); ?></h2>
-                <button class="btn btn-lg btn-primary btn-block" type="submit">Tehingud</button>
+                <a href="<?= $_SERVER['PHP_SELF']; ?>?view=tehingud" class="btn btn-lg btn-primary btn-block" role="button">tehingud</a>
                 <a href="<?= $_SERVER['PHP_SELF']; ?>?view=makse" class="btn btn-lg btn-primary btn-block" role="button">Uus makse</a>
 
             </form>
