@@ -41,3 +41,11 @@ body {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
+.ajaloo-table {
+  max-width: 350px;
+  padding: 15px;
+  margin-top: 30px;
+  margin-right: auto;
+  margin-left: auto;
+  margin-bottom: 0;
+}

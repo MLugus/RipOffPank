@@ -27,7 +27,7 @@
     <nav class="navbar navbar-fixed-top navbar-inverse">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="#">RipOFF Pank</a>
+                <a class="navbar-brand" href="<?= $_SERVER['PHP_SELF']; ?>?view=pealeht">RipOFF Pank</a>
             </div>
         </div>
         <div class="nav navbar-nav navbar-right">

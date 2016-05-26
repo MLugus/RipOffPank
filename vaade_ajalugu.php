@@ -28,7 +28,7 @@
         <nav class="navbar navbar-fixed-top navbar-inverse">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="#">RipOFF Pank</a>
+                    <a class="navbar-brand" href="<?= $_SERVER['PHP_SELF']; ?>?view=pealeht">RipOFF Pank</a>
                 </div>
             </div>
             <div class="nav navbar-nav navbar-right">
@@ -40,9 +40,11 @@
                     </button>
                 </form>
             </div>
+            </nav>
 
         <div class="container">
-            <table class="form-signin table-condensed">
+            <h2 class="form-signin-heading text-center">Konto väljavõte</h2>
+            <table class="ajaloo-table table table-striped table-hover">
                 <thead>
                 <tr>
                     <th>Tehingu Id</th>
