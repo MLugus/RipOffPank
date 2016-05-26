@@ -33,9 +33,10 @@
         <div class="nav navbar-nav navbar-right">
             <form method="post"  action="<?= $_SERVER['PHP_SELF']; ?>">
                 <input type="hidden" name="action" value="logout">
-                <a type="button" href="#" class="btn btn-primary btn-lg">
+                <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token']; ?>">
+                <button type="submit" class="btn btn-primary btn-lg">
                     <span class="glyphicon glyphicon-log-out"></span> Logi välja
-                </a>
+                </button>
             </form>
         </div>
     </nav>

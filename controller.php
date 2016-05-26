@@ -57,8 +57,6 @@ function controller_logout()
     session_destroy();
 
     //message_add('Oled nüüd välja logitud');
-
-    return true;
 }
 
 // Kontrollib kas kasutaja on sisse logitud

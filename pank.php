@@ -36,6 +36,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $result = controller_login($kasutajanimi, $parool);
                 break;
 
+            case 'logout':
+                controller_logout();
+                break;
+
             case 'makse':
                 $saaja = $_POST['saaja'];
                 $summa = $_POST['summa'];
