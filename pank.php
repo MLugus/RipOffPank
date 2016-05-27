@@ -16,9 +16,6 @@ require 'controller.php';
 // rakenduse "ruuter" POST päringu puhul
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-    // $result muutuja indikeerib kas toimus mõni õnnestunud tegevus või mitte
-    $result = false;
-
     // Lubame postitustegevused ainult juhul kui päringuga tuleb kaasa korrektne CSRF token.
     // Eeelab, et paneksime kõikidesse lehe vormidesse selle tokeni peidetud väljana sisse
     if (!empty($_POST['csrf_token']) && $_POST['csrf_token'] == $_SESSION['csrf_token']) {
@@ -28,13 +25,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $kasutajanimi = $_POST['kasutajanimi'];
                 $parool       = $_POST['parool'];
                 $parool2      = $_POST['parool2'];
-                $result       = controller_register($kasutajanimi, $parool, $parool2);
+                controller_register($kasutajanimi, $parool, $parool2);
                 break;
 
             case 'login':
                 $kasutajanimi = $_POST['kasutajanimi'];
                 $parool       = $_POST['parool'];
-                $result       = controller_login($kasutajanimi, $parool);
+                controller_login($kasutajanimi, $parool);
                 break;
 
             case 'logout':
@@ -57,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     exit;
 }
 
-// Rakenduse "ruuter" GET päringu puhul, PEAKS RESTRICKTIMA JUURDEPÄÄSU TEISTELE FAILIDELE.php AGA EI RESTRICKTI
+// Rakenduse "ruuter" GET päringu puhul
 if (!empty($_GET['view'])) {
     switch ($_GET['view']) {
         case 'login':

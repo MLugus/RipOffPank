@@ -9,6 +9,11 @@ $l = mysqli_connect($host, $user, $pass, $db);
 mysqli_query($l, 'SET CHARACTER SET UTF8');
 
 
+/**
+ * laeb alla andmebaasist tehingud, kus on kasutaja nimi kas
+ * maksja all või saaja all ning tagastab selle array'na.
+ * @return array
+ */
 function model_load()
 {
     global $l;
@@ -43,6 +48,12 @@ function model_load()
     return model_re_table($rows);
 }
 
+/**
+ * andmebaasist saadud kasutajate id'd muudab kasutajate nimedeks
+ * ning tabelis olevad summad paneb vastavalt kas plus või miinus ette.
+ * @param $rows
+ * @return array $read
+ */
 function model_re_table($rows)
 {
 
@@ -73,7 +84,11 @@ function model_re_table($rows)
     return $read;
 }
 
-
+/**
+ * otsib andmebaasist id alusel kasutajanime
+ * @param $id
+ * @return string $kasutajanimi
+ */
 function model_kasutajanimi_get($id)
 {
     global $l;
