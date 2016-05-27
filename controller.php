@@ -9,7 +9,7 @@ function controller_register($kasutajanimi, $parool)
     }
 
     if (model_user_add($kasutajanimi, $parool)) {
-        message_add('Kahjuks on konto on registreeritud');
+        message_add('Kahjuks! on konto on registreeritud');
 
         return true;
     }
