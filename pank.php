@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         }
     } else {
-        message_add('Vigane päring, CSRF token ei vasta oodatule');
+        message_add(' Vigane päring, CSRF token ei vasta oodatule');
     }
 
     header('Location: ' . $_SERVER['PHP_SELF']);

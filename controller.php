@@ -3,22 +3,20 @@
 function controller_register($kasutajanimi, $parool, $parool2)
 {
     if ($kasutajanimi == '' || $parool == '') {
-        message_add('Vigased sisendandmed');
+        message_add(' Vigased sisendandmed');
 
         return false;
     }
     if ($parool != $parool2) {
-        message_add('paroolid ei klapi!');
+        message_add(' paroolid ei klapi!');
         return false;
     }
 
     if (model_user_add($kasutajanimi, $parool)) {
-        message_add('Kahjuks! on konto on registreeritud');
-
         return true;
     }
 
-    message_add('Konto registreerimine ebaõnnestus, kasutajanimi võib olla juba võetud');
+    message_add(' Konto registreerimine ebaõnnestus, kasutajanimi võib olla juba võetud');
 
     return false;
 }
@@ -27,14 +25,14 @@ function controller_register($kasutajanimi, $parool, $parool2)
 function controller_login($kasutajanimi, $parool)
 {
     if ($kasutajanimi == '' || $parool == '') {
-        message_add('Vigased sisendandmed');
+        message_add(' Vigased sisendandmed');
 
         return false;
     }
 
     $id = model_user_get($kasutajanimi, $parool);
     if (!$id) {
-        message_add('Vigane kasutajanimi või parool');
+        message_add(' Vigane kasutajanimi või parool');
 
         return false;
     }
@@ -82,33 +80,32 @@ function controller_makse($saaja, $summa)
 {
 
     if (!controller_user()) {
-        message_add('Tegevus eeldab sisselogimist');
+        message_add(' Tegevus eeldab sisselogimist');
 
         return false;
     }
 
     if (model_user_id($saaja) == 0) {
-        message_add('Sellist kasutajat pole meil andmebaasis');
+        message_add(' Sellist kasutajat pole meil andmebaasis');
         return false;
     }
 
     // kontrollime kas sisendväärtused on oodatud kujul või mitte
     if ($saaja == '' || $summa <= 0) {
-        message_add('Vigased sisendandmed');
+        message_add(' Vigased sisendandmed');
 
         return false;
     }
     if ((model_user_kontoseis($_SESSION['login']) - $summa) <= 0) {
-        message_add('Teie kontol pole piisavalt raha tehinguks');
+        message_add(' Teie kontol pole piisavalt raha tehinguks');
         return false;
     }
 
     if (model_makse($saaja, $summa)) {
-        message_add('Tehing õnnestus');
-
+        message_add(' tehing õnnestus!!');
         return true;
     }
-    message_add('tehing ebaõnnestus ebaõnnestus');
+    message_add(' tehing ebaõnnestus');
 
     return false;
 }

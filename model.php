@@ -18,7 +18,7 @@ function model_load()
 {
     global $l;
     $konto_id = $_SESSION['login'];
-    $min      = 1;
+    $min      = 0;
     $max      = 20;
 
     $query = 'SELECT tehingu_id, maksja_id, saaja_id
