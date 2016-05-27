@@ -39,7 +39,7 @@
             <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token']; ?>">
             <input type="text" class="form-control" name="kasutajanimi" placeholder="Kasutajanimi" autofocus required>
             <input type="password" class="form-control" name="parool" placeholder="Salasõna" required>
-            <input type="password" class="form-control" placeholder="Kinnita salasõna" required>
+            <input type="password" class="form-control" name="parool2" placeholder="Kinnita salasõna" required>
             <label class="checkbox">
                 <input type="checkbox" value="terms">Nõustun tingimustega
             </label>

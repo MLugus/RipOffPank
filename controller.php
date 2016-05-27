@@ -1,10 +1,14 @@
 <?php
 // Lisab uue kasutajakonto
-function controller_register($kasutajanimi, $parool)
+function controller_register($kasutajanimi, $parool, $parool2)
 {
     if ($kasutajanimi == '' || $parool == '') {
         message_add('Vigased sisendandmed');
 
+        return false;
+    }
+    if($parool != $parool2){
+        message_add('paroolid ei klapi!');
         return false;
     }
 
