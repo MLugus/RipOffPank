@@ -46,6 +46,16 @@
             <button class="btn btn-lg btn-primary btn-block" type="submit">Registreeri</button>
         </form>
     </div>
+    <?php foreach (message_list() as $message):?>
+        <div class="col-lg-6 col-lg-offset-3">
+            <div class="panel-body">
+                <div class="alert alert-danger">
+                    <button type="button" class="close" data-dismiss="alert">Ć—</button>
+                    <strong>Pekki!</strong><?= $message; ?>
+                </div>
+            </div>
+        </div>
+    <?php endforeach; ?>
 
 
 

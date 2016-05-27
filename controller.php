@@ -3,18 +3,18 @@
 function controller_register($kasutajanimi, $parool)
 {
     if ($kasutajanimi == '' || $parool == '') {
-       // message_add('Vigased sisendandmed');
+        message_add('Vigased sisendandmed');
 
         return false;
     }
 
     if (model_user_add($kasutajanimi, $parool)) {
-       // message_add('Konto on registreeritud');
+        message_add('Kahjuks on konto on registreeritud');
 
         return true;
     }
 
-   // message_add('Konto registreerimine ebaõnnestus, kasutajanimi võib olla juba võetud');
+   message_add('Konto registreerimine ebaõnnestus, kasutajanimi võib olla juba võetud');
 
     return false;
 }
@@ -23,14 +23,14 @@ function controller_register($kasutajanimi, $parool)
 function controller_login($kasutajanimi, $parool)
 {
     if ($kasutajanimi == '' || $parool == '') {
-        //message_add('Vigased sisendandmed');
+        message_add('Vigased sisendandmed');
 
         return false;
     }
 
     $id = model_user_get($kasutajanimi, $parool);
     if (!$id) {
-        //message_add('Vigane kasutajanimi või parool');
+        message_add('Vigane kasutajanimi või parool');
 
         return false;
     }
@@ -38,7 +38,6 @@ function controller_login($kasutajanimi, $parool)
     session_regenerate_id();
     $_SESSION['login'] = $id;
 
-    //message_add('Oled nüüd sisse logitud');
 
     return $id;
 }
@@ -56,7 +55,6 @@ function controller_logout()
     // lõpeta sessioon
     session_destroy();
 
-    //message_add('Oled nüüd välja logitud');
 }
 
 // Kontrollib kas kasutaja on sisse logitud
@@ -80,31 +78,54 @@ function controller_makse($saaja, $summa)
 {
 
     if (!controller_user()) {
-       // message_add('Tegevus eeldab sisselogimist');
+        message_add('Tegevus eeldab sisselogimist');
 
         return false;
     }
 
     if(model_user_id($saaja) == 0){
+        message_add('Sellist kasutajat pole meil andmebaasis');
         return false;
     }
 
     // kontrollime kas sisendväärtused on oodatud kujul või mitte
     if ($saaja == '' || $summa <= 0) {
-       // message_add('Vigased sisendandmed');
+        message_add('Vigased sisendandmed');
 
         return false;
     }
     if( (model_user_kontoseis($_SESSION['login'])-$summa) <= 0 ){
+        message_add('Teie kontol pole piisavalt raha tehinguks');
         return false;
     }
 
     if (model_makse($saaja, $summa)) {
-      //  message_add('Lisati uus rida');
+        message_add('Tehing õnnestus');
 
         return true;
     }
-   // message_add('Andmete lisamine ebaõnnestus');
+    message_add('tehing ebaõnnestus ebaõnnestus');
 
     return false;
+}
+
+// Lisab järjekorda uue sõnumi kasutajale kuvamiseks
+function message_add($message)
+{
+    if (empty($_SESSION['messages'])) {
+        $_SESSION['messages'] = array();
+    }
+    $_SESSION['messages'][] = $message;
+}
+
+// Tagastab kõik hetkel ootel olevad sõnumid
+function message_list()
+{
+    if (empty($_SESSION['messages'])) {
+        return array();
+    }
+    $messages = $_SESSION['messages'];
+    $_SESSION['messages'] = array();
+
+    return $messages;
 }
