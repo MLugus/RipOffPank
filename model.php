@@ -3,7 +3,7 @@
 $host = 'localhost';
 $user = 'test';
 $pass = 't3st3r123';
-$db = 'test';
+$db   = 'test';
 
 $l = mysqli_connect($host, $user, $pass, $db);
 mysqli_query($l, 'SET CHARACTER SET UTF8');
@@ -13,12 +13,12 @@ function model_load()
 {
     global $l;
     $konto_id = $_SESSION['login'];
-    $min = 1;
-    $max = 20;
+    $min      = 1;
+    $max      = 20;
 
     $query = 'SELECT tehingu_id, maksja_id, saaja_id
   , makse_summa FROM mlugus__tehingud WHERE maksja_id=? OR saaja_id=? ORDER BY tehingu_id DESC LIMIT ?, ?';
-    $stmt = mysqli_prepare($l, $query);
+    $stmt  = mysqli_prepare($l, $query);
     if (mysqli_error($l)) {
         echo mysqli_error($l);
         exit;
@@ -34,7 +34,7 @@ function model_load()
             'id' => $id,
             'maksja' => $maksja,
             'saaja' => $saaja,
-            'summa' => $summa,
+            'summa' => $summa
         );
     }
 
@@ -43,41 +43,43 @@ function model_load()
     return model_re_table($rows);
 }
 
-function model_re_table($rows){
+function model_re_table($rows)
+{
 
-    $konto_id = $_SESSION['login'];
+    $konto_id     = $_SESSION['login'];
     $maksja_konto = model_kasutajanimi_get($konto_id);
 
     $read = array();
-    foreach($rows as $row){
+    foreach ($rows as $row) {
         $summa = $row['summa'];
-        if($row['maksja'] == $konto_id){
+        if ($row['maksja'] == $konto_id) {
             $maksja = $maksja_konto;
-            $summa = ((-1) * $row['summa']);
-        }else{
+            $summa  = ((-1) * $row['summa']);
+        } else {
             $maksja = model_kasutajanimi_get($row['maksja']);
         }
-        if($row['saaja'] == $konto_id){
+        if ($row['saaja'] == $konto_id) {
             $saaja = $maksja_konto;
-        }else{
+        } else {
             $saaja = model_kasutajanimi_get($row['saaja']);
         }
         $read[] = array(
             'id' => $row['id'],
             'maksja' => $maksja,
             'saaja' => $saaja,
-            'summa' => $summa,
+            'summa' => $summa
         );
     }
     return $read;
-    }
+}
 
 
-function model_kasutajanimi_get($id){
+function model_kasutajanimi_get($id)
+{
     global $l;
 
     $query = 'SELECT kasutajanimi FROM mlugus__kasutajad WHERE id=? LIMIT 1';
-    $stmt = mysqli_prepare($l, $query);
+    $stmt  = mysqli_prepare($l, $query);
     if (mysqli_error($l)) {
         echo mysqli_error($l);
         exit;
@@ -94,22 +96,22 @@ function model_kasutajanimi_get($id){
 }
 
 /**
-* Lisab andmebaasi uue kasutaja. Õnnestub vaid juhul kui sellist kasutajat veel pole.
+ * Lisab andmebaasi uue kasutaja. Õnnestub vaid juhul kui sellist kasutajat veel pole.
  * Parool salvestatakse BCRYPT räsina.
  *
  * @param string $kasutajanimi Kasutaja nimi
-* @param string $parool       Kasutaja parool
-*
+ * @param string $parool       Kasutaja parool
+ *
  * @return int lisatud kasutaja ID
-*/
+ */
 function model_user_add($kasutajanimi, $parool)
 {
     global $l;
     $kontoj = 2500.00;
 
-    $hash = password_hash($parool, PASSWORD_DEFAULT);
+    $hash  = password_hash($parool, PASSWORD_DEFAULT);
     $query = 'INSERT INTO mlugus__kasutajad (kasutajanimi, parool, kontoseis) VALUES (?, ?, ?)';
-    $stmt = mysqli_prepare($l, $query);
+    $stmt  = mysqli_prepare($l, $query);
     if (mysqli_error($l)) {
         echo mysqli_error($l);
         exit;
@@ -138,7 +140,7 @@ function model_user_get($kasutajanimi, $parool)
     global $l;
 
     $query = 'SELECT id, parool FROM mlugus__kasutajad WHERE kasutajanimi=? LIMIT 1';
-    $stmt = mysqli_prepare($l, $query);
+    $stmt  = mysqli_prepare($l, $query);
     if (mysqli_error($l)) {
         echo mysqli_error($l);
         exit;
@@ -163,11 +165,12 @@ function model_user_get($kasutajanimi, $parool)
  * @param $kasutajanimi
  * @return $id
  */
-function model_user_id($kasutajanimi){
+function model_user_id($kasutajanimi)
+{
     global $l;
 
     $query = 'SELECT id FROM mlugus__kasutajad WHERE kasutajanimi=? LIMIT 1';
-    $stmt = mysqli_prepare($l, $query);
+    $stmt  = mysqli_prepare($l, $query);
     if (mysqli_error($l)) {
         echo mysqli_error($l);
         exit;
@@ -188,11 +191,12 @@ function model_user_id($kasutajanimi){
  * @param $id
  * @return double
  */
-function model_user_kontoseis($id){
+function model_user_kontoseis($id)
+{
     global $l;
 
     $query = 'SELECT kontoseis FROM mlugus__kasutajad WHERE id=? LIMIT 1';
-    $stmt = mysqli_prepare($l, $query);
+    $stmt  = mysqli_prepare($l, $query);
     if (mysqli_error($l)) {
         echo mysqli_error($l);
         exit;
@@ -215,15 +219,16 @@ function model_user_kontoseis($id){
  * @param $summa
  * @return bool
  */
-function model_kontoseisu_uuendus($maksja_id, $saaja_id, $summa){
+function model_kontoseisu_uuendus($maksja_id, $saaja_id, $summa)
+{
 
     global $l;
 
-    $maksja_kontoseis = (model_user_kontoseis($maksja_id)- $summa);
-    $saaja_kontoseis = (model_user_kontoseis($saaja_id)+ $summa);
+    $maksja_kontoseis = (model_user_kontoseis($maksja_id) - $summa);
+    $saaja_kontoseis  = (model_user_kontoseis($saaja_id) + $summa);
 
     $query = 'UPDATE mlugus__kasutajad SET kontoseis=? WHERE id=? LIMIT 1';
-    $stmt = mysqli_prepare($l, $query);
+    $stmt  = mysqli_prepare($l, $query);
     if (mysqli_error($l)) {
         echo mysqli_error($l);
         exit;
@@ -252,10 +257,10 @@ function model_makse($saaja, $summa)
 {
     global $l;
     $maksja_id = $_SESSION['login'];
-    $saaja_id = model_user_id($saaja);
+    $saaja_id  = model_user_id($saaja);
 
     $query = 'INSERT INTO mlugus__tehingud (maksja_id, saaja_id, makse_summa) VALUES (?, ?, ?)';
-    $stmt = mysqli_prepare($l, $query);
+    $stmt  = mysqli_prepare($l, $query);
     if (mysqli_error($l)) {
         echo mysqli_error($l);
         exit;

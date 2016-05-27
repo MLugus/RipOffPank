@@ -7,7 +7,7 @@ function controller_register($kasutajanimi, $parool, $parool2)
 
         return false;
     }
-    if($parool != $parool2){
+    if ($parool != $parool2) {
         message_add('paroolid ei klapi!');
         return false;
     }
@@ -18,7 +18,7 @@ function controller_register($kasutajanimi, $parool, $parool2)
         return true;
     }
 
-   message_add('Konto registreerimine ebaõnnestus, kasutajanimi võib olla juba võetud');
+    message_add('Konto registreerimine ebaõnnestus, kasutajanimi võib olla juba võetud');
 
     return false;
 }
@@ -87,7 +87,7 @@ function controller_makse($saaja, $summa)
         return false;
     }
 
-    if(model_user_id($saaja) == 0){
+    if (model_user_id($saaja) == 0) {
         message_add('Sellist kasutajat pole meil andmebaasis');
         return false;
     }
@@ -98,7 +98,7 @@ function controller_makse($saaja, $summa)
 
         return false;
     }
-    if( (model_user_kontoseis($_SESSION['login'])-$summa) <= 0 ){
+    if ((model_user_kontoseis($_SESSION['login']) - $summa) <= 0) {
         message_add('Teie kontol pole piisavalt raha tehinguks');
         return false;
     }
@@ -128,7 +128,7 @@ function message_list()
     if (empty($_SESSION['messages'])) {
         return array();
     }
-    $messages = $_SESSION['messages'];
+    $messages             = $_SESSION['messages'];
     $_SESSION['messages'] = array();
 
     return $messages;

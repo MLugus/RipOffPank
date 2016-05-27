@@ -26,15 +26,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             case 'register':
                 $kasutajanimi = $_POST['kasutajanimi'];
-                $parool = $_POST['parool'];
-                $parool2 = $_POST['parool2'];
-                $result = controller_register($kasutajanimi, $parool, $parool2);
+                $parool       = $_POST['parool'];
+                $parool2      = $_POST['parool2'];
+                $result       = controller_register($kasutajanimi, $parool, $parool2);
                 break;
 
             case 'login':
                 $kasutajanimi = $_POST['kasutajanimi'];
-                $parool = $_POST['parool'];
-                $result = controller_login($kasutajanimi, $parool);
+                $parool       = $_POST['parool'];
+                $result       = controller_login($kasutajanimi, $parool);
                 break;
 
             case 'logout':
@@ -52,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         message_add('Vigane päring, CSRF token ei vasta oodatule');
     }
 
-    header('Location: '.$_SERVER['PHP_SELF']);
+    header('Location: ' . $_SERVER['PHP_SELF']);
     // POST päringu puhul me sisu ei näita
     exit;
 }
@@ -82,7 +82,7 @@ if (!empty($_GET['view'])) {
     }
 } else {
     if (!controller_user()) {
-        header('Location: '.$_SERVER['PHP_SELF'].'?view=login');
+        header('Location: ' . $_SERVER['PHP_SELF'] . '?view=login');
         exit;
     }
 
@@ -90,5 +90,3 @@ if (!empty($_GET['view'])) {
 }
 
 mysqli_close($l);
-
-
