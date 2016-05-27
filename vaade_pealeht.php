@@ -51,6 +51,14 @@
             </form>
 
         </div>
+    <div class="col-lg-6 col-lg-offset-3">
+            <div class="panel-body">
+                <div class="alert alert-danger">
+                    <button type="button" class="close" data-dismiss="alert">Ć—</button>
+                    <strong>Pekki!</strong> <a href="#" class="alert-link">Change a few things up</a> and try submitting again.
+                </div>
+            </div>
+        </div>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
 

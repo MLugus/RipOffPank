@@ -8,19 +8,22 @@ $db = 'test';
 $l = mysqli_connect($host, $user, $pass, $db);
 mysqli_query($l, 'SET CHARACTER SET UTF8');
 
-// BROKEN , DON'T RELY ON IT YET
+
 function model_load()
 {
     global $l;
     $konto_id = $_SESSION['login'];
+    $min = 1;
+    $max = 20;
 
-    $query = 'SELECT tehingu_id, maksja_id, saaja_id, makse_summa FROM mlugus__tehingud WHERE maksja_id=? OR saaja_id=?';
+    $query = 'SELECT tehingu_id, maksja_id, saaja_id
+  , makse_summa FROM mlugus__tehingud WHERE maksja_id=? OR saaja_id=? ORDER BY tehingu_id DESC LIMIT ?, ?';
     $stmt = mysqli_prepare($l, $query);
     if (mysqli_error($l)) {
         echo mysqli_error($l);
         exit;
     }
-    mysqli_stmt_bind_param($stmt, 'ii', $konto_id, $konto_id);
+    mysqli_stmt_bind_param($stmt, 'iiii', $konto_id, $konto_id, $min, $max);
     mysqli_stmt_execute($stmt);
     mysqli_stmt_bind_result($stmt, $id, $maksja, $saaja, $summa);
 
